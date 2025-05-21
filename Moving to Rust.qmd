@@ -1,7 +1,32 @@
 ---
 title: "Rust as a Second Language"
+author: Joey Bernard
+format: revealjs
 ---
 
-## Quarto
+## Introduction
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+- Look at a short history of Rust
+- Why a new language
+- Pros/cons
+- Some practical experience
+
+
+
+## Rust History
+
+- First version came out in 2015
+- Updates are labelled "editions"
+   - 2015 - first major release (1.0.0)
+   - 2018 - new keywords, the edition system (1.31.0)
+   - 2021 - extra cargo features (1.56.0)
+   - 2024 - more keywords, further unsafe behaviours (1.85.0)
+
+
+## General Syntax
+
+
+
+## Further Resources
+
+- https://rustlings.rust-lang.org/
