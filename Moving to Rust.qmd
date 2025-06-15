@@ -1,32 +1,457 @@
 ---
 title: "Rust as a Second Language"
 author: Joey Bernard
-format: revealjs
+format:
+   revealjs:
+      incremental: true
+      smaller: true
+      theme: moon
+      footer: "Compute Ontario/ACENET Summer School"
+   beamer:
+      slide-level: 2
+      navigation: frame
+      incremental: true
+      theme: Berlin
 ---
 
+
+## Land Acknowledgement
+
+
 ## Introduction
-
-- Look at a short history of Rust
-- Why a new language
-- Pros/cons
-- Some practical experience
-
+- Systems programming language developed by Mozilla
+- Focuses: safety, speed, concurrency
+- Memory-safe without garbage collection
+- Popular in performance-critical applications
 
 
-## Rust History
-
-- First version came out in 2015
-- Updates are labelled "editions"
-   - 2015 - first major release (1.0.0)
-   - 2018 - new keywords, the edition system (1.31.0)
-   - 2021 - extra cargo features (1.56.0)
-   - 2024 - more keywords, further unsafe behaviours (1.85.0)
+## Setup
+- `rustup` tool: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+- Components: Cargo (build tool), rustc (compiler), crates.io (package registry)
+- Pick a version od rust - `rustup default stable`
+- Verify with `rustc --version`
 
 
-## General Syntax
+## Exercise 1
+Setup a new project with `cargo new hello_rust`
+
+
+
+
+
+## Hello World
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+- `fn` keyword, `main` function
+- `println!` is a macro
+
+
+## Exercise 2
+Change the message to see what else you can print out
+
+
+
+
+
+## Variables and Mutability
+- `let` for bindings
+- Immutable by default
+- Type annotations optional but encouraged
+- Use the `mut` annotation to make a variable mutable
+
+
+## Variables and Mutability - Examples
+```rust
+fn main() {
+    let x = 5;
+    let mut y = 10;
+    y += 1;
+    println!("x: {}, y: {}", x, y);
+}
+```
+- `let`, `mut`
+- Type inference
+
+
+## Data Types
+```rust
+let tup = (500, 6.4, 1);
+let arr = [1, 2, 3, 4, 5];
+```
+- Scalar: `i32`, `f64`, `bool`, `char`
+- Compound: Tuples, Arrays
+
+
+## Exercise 3
+Create variables of type `bool`, `char`, and `f64` and print them
+
+
+## Answer 3
+```rust
+fn main() {
+   let x:f64 = 42;
+   ptintln!("x: {}", x);
+}
+```
+
+
+## Exercise 4
+Access and print specific values from the tuple and array
+
+
+## Answer 4
+```rust
+fn main() {
+    let arr = [ 1, 2, 3, 4, 5 ];
+    let x = arr[2];
+    println!("2nd item {}", x);
+}
+```
+
+
+
+
+## Functions
+```rust
+fn add(x: i32, y: i32) -> i32 {
+    x + y
+}
+fn main() {
+    let result = add(2, 3);
+    if result > 3 {
+	println!("Greater than 3");
+    } else {
+	println!("Less or equal to 3");
+    }
+}
+```
+
+
+## Control Flow
+```rust
+if x > 0 {
+    println!("Positive");
+}
+```
+- if, else
+- match
+- loop, while, for
+
+
+## Exercise 5
+Write a function to return the square of a number
+
+
+## Answer 5
+```rust
+fn sq(x: i32) -> i32 {
+   x * x;
+}
+fn main() {
+   println!("42 squared is ", sq(42));
+}
+
+
+
+
+
+## Break 10 minutes
+
+
+
+
+
+## Ownership
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1;
+    // println!("{}", s1); // Error!
+    println!("{}", s2);
+}
+```
+- Every value has a single owner
+- Values are moved or borrowed
+- Prevents double free
+
+
+## References
+```rust
+fn print_len(s: &String) {
+    println!("{}", s.len());
+}
+```
+- Borrow with `&`
+- Mutable with `&mut`
+- Prevents data races
+
+
+## Exercise 6
+How can you access `s1`?
+
+
+## Answer 6
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = &s1;
+    println!("{}", s1); // Error!
+    println!("{}", s2);
+}
+```
+
+
+
+
+
+
+## Borrowing
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let len = calculate_length(&s1);
+    println!("Length: {}", len);
+}
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+- `&` means reference
+- Immutable and mutable borrowing
+
+
+## Mutable Borrowing
+```rust
+fn modify(s: &mut String) {
+    s.push_str(" world"## Mutable);
+}
+```
+
+
+## Exercise 7
+Create a mutable string and pass it to `modify`
+```rust
+fn modify(s: &mut String) {
+    s.push_str(" world"## Mutable);
+}
+fn main() {
+   let mut s1 = String::from("hello");
+   modify(&mut s1);
+}
+```
+
+
+
+
+
+## Structs and Enums
+```rust
+struct User {
+    username: String,
+    active: bool,
+}
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+}
+```
+- Custom data types
+- `impl` blocks for methods
+
+
+## impl
+```
+impl User {
+    fn print(&self) {
+	println!("User: {}, active: {}", self.name, self.active);
+    }
+}
+```
+
+
+## Exercise 8
+Create and print a `User`; create an enum `Status` with at least 2 variants
+
+
+
+## Answer 8
+```rust
+struct User {
+    username: String,
+    active: bool,
+}
+impl User {
+    fn print(&self) {
+	println!("User: {}, active: {}", self.name, self.active);
+    }
+}
+fn main() {
+    let user1 = User {
+	username: String::from("Joey"),
+	active: true,
+    };
+    println!("Username: {}", user1.username);
+}
+```
+
+
+
+
+## Matching
+```rust
+match direction {
+    Direction::Up => println!("Up"),
+    _ => println!("Other")
+}
+```
+- Powerful control Structure
+
+
+## Option and Result
+```rust
+fn divide(a: i32, b: i32) -> Option<i32> {
+    if b != 0 { Some(a / b) } else { None }
+}
+```
+- Avoid nulls and unchecked errors
+
+
+
+
+
+
+## Break 10 minutes
+
+
+
+
+
+## Vectors and Hashmaps
+```rust
+let mut v = vec![1, 2, 3];
+v.push(4);
+
+use std::collections::HashMap;
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+```
+
+
+## Exercise 9
+Iterate over a `Vec` and print entries
+
+
+## Answer 9
+```rust
+fn main() {
+    let x = vec![1, 2, 3];
+    for num in x.iter() {
+	println!("Number: {}", num);
+    }
+}
+```
+
+
+
+
+
+## Traits and Generics - 1
+```rust
+trait Drawable {
+    fn draw(&self);
+}
+```
+- Like interfaces
+- Enable polymorphism
+
+
+## Traits and Generics - 2
+```rust
+trait Summary {
+    fn summarize(&self) -> String;
+}
+struct Article {
+    title: String,
+}
+impl Summary for Article {
+    fn summarize(&self) -> String {
+	format!("Read more: {}", self.title)
+    }
+}
+```
+- Polymorphism with traits
+- Generic types: `fn largest<T: PartialOrd>(list: &[T]) -> T { ... }`
+
+
+
+
+
+
+## Threads
+```rust
+use std::thread;
+
+let handle = thread::spawn(|| {
+    for i in 1..5 {
+	println!("Thread count: {}", i);
+    }
+});
+handle.join().unwrap();
+```
+- Threads, channels, `async/await`
+- Safe and ergonomic concurrency
+
+
+## Exercise 10
+Create two threads and have each print different messages
+
+
+## Answer 10
+```rust
+use std::thread;
+
+let handle = thread::spawn(|| {
+    for i in 1..5 {
+	println!("Thread id: {}", thread::current().id());
+    }
+});
+handle.join().unwrap();
+```
+
+
+## Unsafe
+- Dereference a raw pointer
+- Call an unsafe function or method
+- Access or modify a mutable static variable
+- Implement an unsafe trait
+- Access fields of a union
+
+
+## Unsafe - Example
+```rust
+let mut num = 5;
+
+    let r1 = &raw const num;
+    let r2 = &raw mut num;
+
+    unsafe {
+	println!("r1 is: {}", *r1);
+	println!("r2 is: {}", *r2);
+    }
+```
+
 
 
 
 ## Further Resources
 
 - https://rustlings.rust-lang.org/
+- https://doc.rust-lang.org/book/
+- https://doc.rust-lang.org/rust-by-example/
+- https://crates.io
+- https://docs.rs
+- https://play.rust-lang.org/
+- https://exercism.org/tracks/rust
