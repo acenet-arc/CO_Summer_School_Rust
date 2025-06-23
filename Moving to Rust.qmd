@@ -28,7 +28,7 @@ format:
 ## Setup
 - `rustup` tool: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 - Components: Cargo (build tool), rustc (compiler), crates.io (package registry)
-- Pick a version od rust - `rustup default stable`
+- Pick a version of rust - `rustup default stable`
 - Verify with `rustc --version`
 
 
@@ -122,9 +122,9 @@ fn add(x: i32, y: i32) -> i32 {
 fn main() {
     let result = add(2, 3);
     if result > 3 {
-	println!("Greater than 3");
+        println!("Greater than 3");
     } else {
-	println!("Less or equal to 3");
+        println!("Less or equal to 3");
     }
 }
 ```
@@ -263,10 +263,10 @@ enum Message {
 
 
 ## impl
-```
+```rust
 impl User {
     fn print(&self) {
-	println!("User: {}, active: {}", self.name, self.active);
+        println!("User: {}, active: {}", self.name, self.active);
     }
 }
 ```
@@ -285,13 +285,13 @@ struct User {
 }
 impl User {
     fn print(&self) {
-	println!("User: {}, active: {}", self.name, self.active);
+        println!("User: {}, active: {}", self.name, self.active);
     }
 }
 fn main() {
     let user1 = User {
-	username: String::from("Joey"),
-	active: true,
+        username: String::from("Joey"),
+        active: true,
     };
     println!("Username: {}", user1.username);
 }
@@ -317,8 +317,9 @@ fn divide(a: i32, b: i32) -> Option<i32> {
 }
 ```
 - Avoid nulls and unchecked errors
-
-
+- ***Option*** allows you to return either ***Some()***, or return ***None***
+- ***Result*** allows you to return either ***Ok()*** or ***Err()***
+- Allows for more robust return values
 
 
 
@@ -349,7 +350,7 @@ Iterate over a `Vec` and print entries
 fn main() {
     let x = vec![1, 2, 3];
     for num in x.iter() {
-	println!("Number: {}", num);
+        println!("Number: {}", num);
     }
 }
 ```
@@ -378,7 +379,7 @@ struct Article {
 }
 impl Summary for Article {
     fn summarize(&self) -> String {
-	format!("Read more: {}", self.title)
+        format!("Read more: {}", self.title)
     }
 }
 ```
@@ -396,7 +397,7 @@ use std::thread;
 
 let handle = thread::spawn(|| {
     for i in 1..5 {
-	println!("Thread count: {}", i);
+        println!("Thread count: {}", i);
     }
 });
 handle.join().unwrap();
@@ -415,7 +416,7 @@ use std::thread;
 
 let handle = thread::spawn(|| {
     for i in 1..5 {
-	println!("Thread id: {}", thread::current().id());
+        println!("Thread id: {}", thread::current().id());
     }
 });
 handle.join().unwrap();
@@ -438,8 +439,8 @@ let mut num = 5;
     let r2 = &raw mut num;
 
     unsafe {
-	println!("r1 is: {}", *r1);
-	println!("r2 is: {}", *r2);
+        println!("r1 is: {}", *r1);
+        println!("r2 is: {}", *r2);
     }
 ```
 
